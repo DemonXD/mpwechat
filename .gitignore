@@ -1,0 +1,6 @@
+config.yml
+.vscode/
+**/*.txt
+!requirements.txt
+logs
+venv
