@@ -1,6 +1,9 @@
 config.yml
 .vscode/
+**/__pycache__
 **/*.txt
+scripts/
 !requirements.txt
+data.db
 logs
 venv

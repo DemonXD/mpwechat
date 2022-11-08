@@ -1,0 +1,5 @@
+MpWechat:
+  DEBUG: true
+  LOG_CONFIG_FILE: logger.conf
+  INSTALLED_APPS:
+    - wechat.AppConfig
