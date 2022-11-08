@@ -1,0 +1,2 @@
+MpWechat:
+  DATABASE: sqlite:///data.db
