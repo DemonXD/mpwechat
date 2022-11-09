@@ -1,1 +1,1 @@
-gunicorn wsgi:app --bind 0.0.0.0:9000 --workers 1
+venv/bin/gunicorn wsgi:app --bind 0.0.0.0:9000 --workers 4

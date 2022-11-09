@@ -6,9 +6,9 @@ from typing import Any
 
 import typer
 
-# from fastframe.flaskapp import setup
+from application import get_application
 
-# setup()
+get_application()
 cli = typer.Typer()
 
 
@@ -74,7 +74,12 @@ def _load_commands_from_path(pkg: str, path: Path) -> None:
 
 def populate_application_commands():
     from apps import apps
+    # _load_commands_from_path("fastframe.fastapp.commands", Path(__file__).parent)
     _load_commands_from_path("commands", Path(__file__).parent / "commands")
+
+    for app in apps.app_configs.values():
+        _load_commands_from_path(f"{app.module.__name__}.commands", app.path / "commands")
+
 
 populate_application_commands()
 
