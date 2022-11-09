@@ -10,6 +10,7 @@ from typing import (
 from pydantic import BaseModel, Field, validator
 
 from .exceptions import ImproperlyConfigured
+from utils.functional import SimpleLazyObject
 
 
 def get_env_name() -> str:

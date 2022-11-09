@@ -1,2 +1,7 @@
 MpWechat:
   DATABASE: sqlite:///data.db
+
+wechat:
+  local:
+    bind_service_token: WTFIAMTHETOKEN
+    EncodingAESkey: 1jjjbQp4AP0j22yLXAqv4O13iV2TAuV758438wZDPpJ
