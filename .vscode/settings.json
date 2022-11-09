@@ -1,0 +1,5 @@
+{
+    "python.pythonPath_WIN": "venv\\Scripts\\python.exe",
+    "python.pythonPath_LINUX": "venv/bin/python",
+    "python.pythonPath_OSX": "venv/bin/python"
+}

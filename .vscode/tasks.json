@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run test server",
+            "type": "process",
+            "windows":{ 
+                "command": "${config:python.pythonPath_WIN}",
+                "args": [
+                    "${workspaceFolder}\\mpserver.py",
+                    "runserver"
+                ],
+            },
+            "linux": { 
+                "command": "${config:python.pythonPath_LINUX}",
+                "args": [
+                    "${workspaceFolder}/mpserver.py",
+                    "runserver"
+                ],
+            },
+            "osx": { 
+                "command": "${config:python.pythonPath_OSX}",
+                "args": [
+                    "${workspaceFolder}/mpserver.py",
+                    "runserver"
+                ],
+             }
+        }
+    ],
+}
