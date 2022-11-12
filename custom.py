@@ -119,7 +119,9 @@ class CusFlask(Flask):
         for directory in folders:
             try:
                 return send_from_directory(
-                    directory, filename, cache_timeout=cache_timeout)
+                    directory, filename)
+                # return send_from_directory(
+                #     directory, filename, cache_timeout=cache_timeout)
             except NotFound:
                 pass
         raise NotFound()

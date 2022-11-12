@@ -1,6 +1,7 @@
 MpWechat:
   DEBUG: true
   LOG_CONFIG_FILE: logger.conf
+  STATIC_URL: static
   INSTALLED_APPS:
     - wechat.AppConfig
     - homepage.AppConfig

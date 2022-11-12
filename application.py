@@ -69,6 +69,14 @@ def get_application() -> CusFlask:
         router = app_config.get_router()
         if router:
             app.register_blueprint(router)
+        
+    
+    if settings.STATIC_URL:
+        static_temp_folder = app.static_folder
+        for app_config in apps.app_configs.values():
+            if (Path(app_config.module.__name__) / "static" ).exists():
+                static_temp_folder.append(app_config.module.__name__ + "/static")
+        app.static_folder = static_temp_folder
 
     app.after_request(after_request)
     app.register_error_handler(400, logical_exception_handler)
