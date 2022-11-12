@@ -1,20 +1,13 @@
-import json
 import configparser
-import jinja2
-from typing import Optional, Type, Union, List
+from typing import Optional
 
-from pathlib import Path
-from flask import Response, Flask
-from flask.templating import Environment
-from flask.globals import request, session, g
-from flask.helpers import get_flashed_messages
-from flask.typing import ResponseReturnValue
+from flask import Response
 from flask_apscheduler import APScheduler
 from flask_session import Session
 
 from apps import apps
 from conf import settings
-from responses.api import APIResponse
+from custom import CusFlask
 from exception_handlers import logical_exception_handler
 
 
@@ -36,67 +29,6 @@ def patch_pydantic_datetime_serializer():
 def after_request(resp: Response) -> Response:
     resp.headers["Access-Control-Allow-Origin"] = "*"
     return resp
-
-
-class CusFlask(Flask):
-    def make_response(self, rv: Union[ResponseReturnValue, Type[APIResponse]]) -> Response:
-        if issubclass(type(rv), APIResponse):
-            body, status_code = rv.content # type: ignore [union-attr]
-            return Response(json.dumps(body), status=status_code, content_type="application/json")
-        return super().make_response(rv)
-
-    def create_jinja_environment(self) -> Environment:
-        """Create the Jinja environment based on :attr:`jinja_options`
-        and the various Jinja-related methods of the app. Changing
-        :attr:`jinja_options` after this will have no effect. Also adds
-        Flask-related globals and filters to the environment.
-
-        .. versionchanged:: 0.11
-           ``Environment.auto_reload`` set in accordance with
-           ``TEMPLATES_AUTO_RELOAD`` configuration option.
-
-        .. versionadded:: 0.5
-        """
-        options = dict(self.jinja_options)
-
-        if "autoescape" not in options:
-            options["autoescape"] = self.select_jinja_autoescape
-
-        if "auto_reload" not in options:
-            auto_reload = self.config["TEMPLATES_AUTO_RELOAD"]
-
-            if auto_reload is None:
-                auto_reload = self.debug
-
-            options["auto_reload"] = auto_reload
-
-        from apps import apps
-
-        loaders: List[jinja2.BaseLoader] = []
-        # 默认添加 ${PWD}/templates/ 目录
-        loaders.append(jinja2.FileSystemLoader("templates"))
-        # 添加所有 installed apps 的 templates 目录
-        for app in apps.app_configs.values():
-            if Path(f"{app.module.__name__}/templates").exists():
-                loaders.append(jinja2.PackageLoader(f"{app.module.__name__}", "templates"))
-
-
-        rv = self.jinja_environment(self, **options)
-        rv.loader = jinja2.ChoiceLoader(loaders)
-        rv.globals.update(
-            url_for=self.url_for,
-            get_flashed_messages=get_flashed_messages,
-            config=self.config,
-            # request, session and g are normally added with the
-            # context processor for efficiency reasons but for imported
-            # templates we also want the proxies in there.
-            request=request,
-            session=session,
-            g=g,
-        )
-        rv.policies["json.dumps_function"] = self.json.dumps
-        return rv
-
 
 _app_instance: Optional[CusFlask] = None
 
