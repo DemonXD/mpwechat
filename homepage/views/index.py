@@ -5,4 +5,4 @@ home_router = Blueprint("homepage", __name__)
 
 @home_router.get("/home")
 def page_home():
-    return render_template("index.html")
+    return render_template("index.html", title="泰州北青环境")

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <title>{{ title }}</title>
+</head>
+<body>
+    {% include "component/header.html" %}
+    {% include "component/float_nav.html" %}
+    {% block content %}{% endblock %}
+    {% include "component/footer.html" %}
+</body>
+</html>
