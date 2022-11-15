@@ -19,3 +19,37 @@
         - title: relation to Consultation.title
         - content
 """
+import time
+import string
+import nanoid
+import sqlalchemy as sa
+from db import Model
+
+
+class Consultation(Model):
+    __tablename__ = "consultation"
+    __repr_attrs__ = ["title"]
+    
+    uid = sa.Column(
+        sa.Text,
+        primary_key=True,
+        index=True,
+        default=lambda: nanoid.generate(string.ascii_letters + string.digits, 32),
+    )
+    avatar = sa.Column(sa.String(512), nullable=False)
+    title = sa.Column(sa.String(128), nullable=True)
+    description = sa.Column(sa.String(512), nullable=True)
+    
+
+
+class ConsultationContent(Model):
+    __tablename__ = "consultation_content"
+    __repr_attrs__ = ["title"]
+
+    uid = sa.Column(
+        sa.Text,
+        primary_key=True,
+        index=True,
+        default=lambda: nanoid.generate(string.ascii_letters + string.digits, 32),
+    )
+    content = sa.Column(sa.Text, nullable=True)
